@@ -1,0 +1,91 @@
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  transition: background 0.5s ease;
+}
+
+.navbar {
+  background-color: #1f1f1f;
+  padding: 10px;
+  text-align: center;
+}
+
+.navbar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.navbar ul li a {
+  color: #00bfff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.navbar ul li a:hover {
+  color: #ffd700;
+}
+
+.content {
+  padding: 40px;
+  text-align: center;
+}
+
+.profile-img {
+  margin-top: 20px;
+  width: 200px;
+  border-radius: 50%;
+  border: 2px solid #00bfff;
+}
+
+.skills-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.skills-list li {
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+.socials a {
+  color: #00bfff;
+  margin: 0 15px;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.socials a:hover {
+  color: #ff4081;
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 1s ease-in;
+}
+.slide-up {
+  animation: slideUp 1s ease-out;
+}
+.zoom-in {
+  animation: zoomIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+@keyframes slideUp {
+  from {transform: translateY(40px); opacity: 0;}
+  to {transform: translateY(0); opacity: 1;}
+}
+@keyframes zoomIn {
+  from {transform: scale(0.9); opacity: 0;}
+  to {transform: scale(1); opacity: 1;}
+}

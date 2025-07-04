@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+      color: #e0e0e0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(15, 15, 35, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(0, 191, 255, 0.3);
+    }
+
+    .navbar .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .navbar ul li a {
+      color: #00bfff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      padding: 10px 20px;
+      border-radius: 25px;
+    }
+
+    .navbar ul li a:hover,
+    .navbar ul li a.active {
+      color: #ffeb3b;
+      background: rgba(255, 235, 59, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .toggler {
+      display: none;
+      font-size: 24px;
+      color: #00bfff;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 10px;
+    }
+
+    .content {
+      padding-top: 100px;
+      min-height: 100vh;
+      padding: 50px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .content h1 {
+      font-size: 3rem;
+      margin-bottom: 40px;
+      background: linear-gradient(45deg, #00bfff, #ffeb3b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .contact-info {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 30px;
+      border: 1px solid rgba(0, 191, 255, 0.2);
+      max-width: 600px;
+      margin: 0 auto;
+      backdrop-filter: blur(10px);
+    }
+
+    .contact-info p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .socials a {
+      color: #00bfff;
+      font-size: 2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      padding: 10px;
+      border-radius: 50%;
+      background: rgba(0, 191, 255, 0.1);
+    }
+
+    .socials a:hover {
+      color: #ffeb3b;
+      background: rgba(255, 235, 59, 0.1);
+      transform: scale(1.2);
+    }
+
+    .contact-form {
+      margin-top: 30px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(0, 191, 255, 0.3);
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #e0e0e0;
+      font-size: 1rem;
+    }
+
+    .contact-form button {
+      padding: 12px 25px;
+      background: linear-gradient(45deg, #00bfff, #0080ff);
+      border: none;
+      border-radius: 25px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .contact-form button:hover {
+      background: linear-gradient(45deg, #0080ff, #00bfff);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 191, 255, 0.3);
+    }
+
+    .message {
+      margin-top: 15px;
+      font-size: 1rem;
+      color: #ffeb3b;
+    }
+
+    .error {
+      color: #ff4d4d;
+    }
+
+    .slide-up {
+      animation: slideUp 1s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar .container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .navbar ul {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        background: rgba(15, 15, 35, 0.98);
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .navbar ul.active {
+        display: flex;
+      }
+
+      .toggler {
+        display: block;
+      }
+
+      .content {
+        padding-top: 120px;
+      }
+
+      .content h1 {
+        font-size: 2.5rem;
+      }
+
+      .contact-info {
+        padding: 20px;
+        max-width: 100%;
+      }
+
+      .contact-info p {
+        font-size: 1rem;
+      }
+
+      .socials a {
+        font-size: 1.5rem;
+        padding: 8px;
+      }
+
+      .contact-form {
+        max-width: 100%;
+        padding: 0 10px;
+      }
+
+      .contact-form input,
+      .contact-form textarea {
+        font-size: 0.9rem;
+      }
+
+      .contact-form button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .content h1 {
+        font-size: 2rem;
+      }
+
+      .contact-info p {
+        font-size: 0.9rem;
+      }
+
+      .socials a {
+        font-size: 1.2rem;
+        padding: 6px;
+      }
+
+      .contact-form input,
+      .contact-form textarea {
+        font-size: 0.8rem;
+      }
+
+      .contact-form button {
+        padding: 8px 18px;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <button class="toggler" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul>
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="skills.html"><i class="fas fa-code"></i> Skills</a></li>
+        <li><a href="experience.html"><i class="fas fa-briefcase"></i> Experience</a></li>
+        <li><a href="projects.html"><i class="fas fa-project-diagram"></i> Projects</a></li>
+        <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+  <section class="content slide-up">
+    <h1>Contact Me</h1>
+    <div class="contact-info">
+      <p>Feel free to reach out to me for collaboration or inquiries. I'm available via email or social media.</p>
+      <p>Email: <a href="mailto:yrajak68@gmail.com" style="color: #00bfff;">yrajak608@gmail.com</a></p>
+      <div class="socials">
+        <a href="https://github.com/yashrajak12" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com/in/yash-rajak-146154261" target="_blank" title="LinkedIn"><i
+            class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/yash_rajak_12" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="contact-form">
+      <form id="contactForm">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+      <p id="formMessage" class="message"></p>
+    </div>
+  </section>
+  <script>
+  // Initialize EmailJS with your User ID
+  (function(){
+    emailjs.init("CC0kD8LWjDiEvmy2u"); // Replace with your User ID
+  })();
+
+  const toggler = document.querySelector('.toggler');
+  const navMenu = document.querySelector('.navbar ul');
+  const contactForm = document.querySelector('#contactForm');
+  const formMessage = document.querySelector('#formMessage');
+
+  // Navbar toggle functionality
+  toggler.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+  });
+
+  // Navbar scroll effect
+  window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+      navbar.style.background = 'rgba(15, 15, 35, 0.98)';
+    } else {
+      navbar.style.background = 'rgba(15, 15, 35, 0.95)';
+    }
+  });
+
+  // Form submission with EmailJS
+  contactForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const formData = {
+      name: contactForm.name.value,
+      email: contactForm.email.value,
+      message: contactForm.message.value,
+      to_email: 'yrajak608@gmail.com' // Your email address
+    };
+
+    emailjs.send('service_bubt3zc', 'template_fhjfklh', formData)
+      .then(function(response) {
+        formMessage.textContent = 'Message sent successfully!';
+        formMessage.classList.remove('error');
+        contactForm.reset();
+        setTimeout(() => formMessage.textContent = '', 5000);
+      }, function(error) {
+        formMessage.textContent = 'Failed to send message: ' + error.text;
+        formMessage.classList.add('error');
+      });
+  });
+</script>
+</body>
+
+</html>
